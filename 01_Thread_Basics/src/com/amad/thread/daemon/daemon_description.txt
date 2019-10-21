@@ -1,0 +1,3 @@
+call the setDaemon() method before the call of start() method. 
+Once the thread is running, you can't modify its daemon status calling the setDaemon() method. 
+If you call it, you will get an IllegalThreadStateException exception
