@@ -1,0 +1,4 @@
+The thread-local variables mechanism stores a value of an attribute for each thread that uses one of these variables. 
+You can read the value using the get() method and change the value using the set() method. 
+The first time you access the value of a thread-local variable, if it has no value for the thread object that it is calling, 
+the thread-local variable will call the initialValue() method to assign a value for that thread and return the initial value.
