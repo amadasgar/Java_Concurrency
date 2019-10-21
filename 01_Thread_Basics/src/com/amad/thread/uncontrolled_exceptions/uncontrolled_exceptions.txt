@@ -23,9 +23,9 @@ It's the static method setDefaultUncaughtExceptionHandler() that establishes an 
 application.
 
 When an uncaught exception is thrown in the thread, the JVM looks for three possible handlers for this exception.
-First it looks for the uncaught exception handler of the thread objects, as we learned in this recipe. 
+First it looks for the uncaught exception handler of the thread objects. 
 If this handler doesn't exist, the JVM looks for the uncaught exception handler of ThreadGroup. 
-If this method doesn't exist, the JVM looks for the default uncaught exception handler, as we learned in this recipe.
+If this method doesn't exist, the JVM looks for the default uncaught exception handler.
 
 If none of the handlers exits, the JVM writes the stack trace of the exception in the console and ends the execution of 
 the Thread that had thrown the exception.
