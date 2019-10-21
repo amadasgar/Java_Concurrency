@@ -1,0 +1,13 @@
+This program writes a Date object per second and also the message indicating that the clock thread has been interrupted.
+
+Upon calling Sleep method the thread leaves the CPU and stops its execution for a period of time. 
+During this time, it's not consuming CPU time, so the CPU could be executing other tasks.
+
+When the thread is sleeping and is interrupted, the method throws an InterruptedException exception immediately and doesn't wait 
+until the sleeping time is finished.
+
+********************************************************************************************************************************
+yield() another static method in thread class makes a thread object leave the CPU. 
+It's the yield() method, which indicates to the JVM that the thread object can leave the CPU for other tasks. 
+The JVM does not guarantee that it will comply with this request. 
+Normally, it's only used for debugging purposes.
