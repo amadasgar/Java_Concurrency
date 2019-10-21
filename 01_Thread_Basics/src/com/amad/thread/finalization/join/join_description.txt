@@ -1,0 +1,15 @@
+join() methods in thread class makes the calling thread to wait until the execution of thread is finished on which join method is called.
+
+Java provides two additional forms of the join() method:
+
+	1.	join (long milliseconds)
+	2.	join (long milliseconds, long nanos)
+
+In the first version of the join() method, instead of indefinitely waiting for the finalization of the thread called, 
+the calling thread waits for the milliseconds specified as the parameter of the method. For example, if the object thread1 has thread2.
+join(1000), thread1 suspends its execution until one of these two conditions are met:
+
+	1.	thread2 has finished its execution
+	2.	1,000 milliseconds have passed
+
+When one of these two conditions is true, the join() method returns. 
