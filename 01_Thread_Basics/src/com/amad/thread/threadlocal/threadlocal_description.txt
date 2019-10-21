@@ -2,3 +2,11 @@ The thread-local variables mechanism stores a value of an attribute for each thr
 You can read the value using the get() method and change the value using the set() method. 
 The first time you access the value of a thread-local variable, if it has no value for the thread object that it is calling, 
 the thread-local variable will call the initialValue() method to assign a value for that thread and return the initial value.
+********************************************************************************************************************************
+The thread-local class also provides the remove() method that deletes the value stored in a thread-local variable for the thread 
+that it's calling.
+
+The Java Concurrency API includes the InheritableThreadLocal class that provides inheritance of values for threads created from a 
+thread. If thread A has a value in a thread-local variable and it creates another thread B, then thread B will have the same value as 
+thread A in the thread-local variable. You can override the childValue() method that is called to initialize the value of the child 
+thread in the thread-local variable. It receives the value of the parent thread as a parameter in the thread-local variable.
