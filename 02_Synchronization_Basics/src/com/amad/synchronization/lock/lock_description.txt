@@ -1,0 +1,47 @@
+Java provides another mechanism for synchronizing blocks of code. It's a more powerful and flexible mechanism than the synchronized 
+keyword. It's based on the Lock (of the java.util.concurrent.locks package) interface and classes that implement it 
+(as ReentrantLock). This mechanism presents some advantages, which are as follows:
+1.	It allows you to structure synchronized blocks in a more flexible way. With the synchronized keyword, you only have control 
+	over a synchronized block of code in a structured way. However, the Lock interface allows you to get more complex structures 
+	to implement your critical section.
+2.	The Lock interface provides additional functionalities over the synchronized keyword. One of the new functionalities is 
+	implemented by the tryLock() method. This method tries to get control of the lock, and if it can't, because it's used by 
+	another thread, it returns false. With the synchronized keyword, if thread (A) tries to execute a synchronized block of 
+	code when thread (B) is executing it, thread (A) is suspended until thread (B) finishes the execution of the synchronized block.
+	With lock, you can execute the tryLock() method. This method returns a Boolean value indicating whether there is another thread 
+	running the code protected by this lock.
+3.	The ReadWriteLock interface allows a separation of read and write operations with multiple readers and only one modifier.
+4.	The Lock interface offers better performance than the synchronized keyword.
+
+The constructor of the ReentrantLock class admits a boolean parameter named fair; this parameter allows you to control its behavior.
+The false value is the default value and it's called the non-fair mode. In this mode, if some threads are waiting for a lock and 
+the lock has to select one of these threads to get access to the critical section, it randomly selects anyone of them. 
+The true value is called the fair mode. In this mode, if some threads are waiting for a lock and the lock has to select one to 
+get access to a critical section, it selects the thread that has been waiting for the longest period of time. 
+Take into account that the behavior explained previously is only used in the lock() and unlock() methods. 
+As the tryLock() method doesn't put the thread to sleep if the Lock interface is used, the fair attribute doesn't affect its 
+functionality.
+
+***********************************************************************************************************************************
+
+The key to the example is in the printJob() method of the PrintQueue class. When we want to implement a critical section using locks 
+and guarantee that only one execution thread will run a block of code, we have to create a ReentrantLock object. At the beginning of 
+the critical section, we have to get control of the lock using the lock() method. When thread (A) calls this method, if no other thread 
+has control of the lock, it gives thread (A) control of the lock and returns immediately to allow the thread to execute the critical 
+section. Otherwise, if there is another, say thread (B), executing the critical section controlled by this lock, the lock() method 
+puts thread (A) to sleep until thread (B) finishes the execution of the critical section.
+
+At the end of the critical section, we have to use the unlock() method to free the control of the lock and allow other threads to run the critical section. If you don't call the unlock() method at the end of the critical section, other threads that are waiting for the block will wait forever, causing a deadlock situation. If you use try-catch blocks in your critical section, don't forget to put the sentence containing the unlock() method inside the finally section.
+
+The other topic we tested in this example was fair mode. We had two critical sections in every job. In the previous screenshot, 
+you saw how all the jobs execute the second part immediately after the first one. This is the usual case, but there are exceptions. 
+This occurs when we have non-fair mode, that is to say, we pass a false value to the constructor of the ReentrantLock class.
+
+On the contrary, when we establish fair mode by passing the true value to the constructor of the Lock class, the behavior is different.
+ The first thread that requests control of the lock is Thread 0, then Thread 1, and so on. While Thread 0 is running the first block 
+ of code protected by the lock, we have nine threads waiting to execute the same block of code. When Thread 0 releases the lock, it 
+ immediately requests the lock again, so we have 10 threads trying to get the lock. As the fair mode is enabled, the Lock interface 
+ will choose Thread 1, as it's the thread that has been waiting for more time for the lock. Then, it chooses Thread 2, then Thread 3, 
+ and so on. Until all the threads have passed the first block protected by the lock, none of them will execute the second block 
+ protected by the lock. Once all the threads have executed the first block of code
+ protected by the lock, then it will be the turn of Thread 0 again, then Thread 1, and so on.
