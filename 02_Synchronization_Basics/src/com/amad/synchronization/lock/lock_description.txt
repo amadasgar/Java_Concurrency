@@ -43,5 +43,25 @@ On the contrary, when we establish fair mode by passing the true value to the co
  immediately requests the lock again, so we have 10 threads trying to get the lock. As the fair mode is enabled, the Lock interface 
  will choose Thread 1, as it's the thread that has been waiting for more time for the lock. Then, it chooses Thread 2, then Thread 3, 
  and so on. Until all the threads have passed the first block protected by the lock, none of them will execute the second block 
- protected by the lock. Once all the threads have executed the first block of code
- protected by the lock, then it will be the turn of Thread 0 again, then Thread 1, and so on.
+ protected by the lock. Once all the threads have executed the first block of code protected by the lock, then it will be the turn of 
+ Thread 0 again, then Thread 1, and so on.
+ ***********************************************************************************************************************************
+ 
+The Lock interface (and the ReentrantLock class) includes another method to get control of the lock. It's the tryLock() method. 
+The biggest difference with the lock() method is that this method, if the thread that uses it can't get control of the Lock interface,
+returns immediately and doesn't put the thread to sleep. It returns the boolean value true if the thread gets control of the lock 
+and false if not. You can also pass a time value and a TimeUnit object to indicate the maximum amount of time the thread will wait 
+to get the lock. If the time elapses and the thread doesn't get the lock, the method will return the false value. The TimeUnit class 
+is an enumeration with the following constants: DAYS, HOURS, MICROSECONDS, MILLISECONDS, MINUTES, NANOSECONDS, and SECONDS; these 
+indicate the units of time we pass to a method.
+
+Take into consideration that it is the responsibility of the programmer to take into account the result of this method and act 
+accordingly. If the method returns false, it's apparent that your program is unable to execute the critical section. 
+If it does, you probably will have wrong results in your application.
+
+The ReentrantLock class also allows the use of recursive calls. When a thread has control of a lock and makes a recursive call, 
+it continues with the control of the lock, so the calling to the lock() method will return immediately and the thread will continue 
+with the execution of the recursive call. Moreover, we can also call other methods. You should call the unlock() method as many times 
+as you called the lock() method in your code.
+ 
+ 
