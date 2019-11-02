@@ -19,3 +19,11 @@ However, there are some differences with respect to other synchronization method
 	It is used to synchronize one or more threads with the execution of various tasks.
 2.	It only admits one use. As explained earlier, once the counter of CountDownLatch arrives at 0, all the calls to its methods have 
 	no effect. You have to create a new object if you want to do the same synchronization again.
+	
+
+The CountDownLatch class has another version of the await() method, which is as follows:
+
+await(long time, TimeUnit unit): In this method, the thread will continue to sleep until it's interrupted, that is, 
+either the internal counter of CountDownLatch arrives at 0 or the specified time passes. 
+The TimeUnit class is an enumeration with the following constants: DAYS, HOURS, MICROSECONDS, MILLISECONDS, MINUTES, NANOSECONDS, 
+and SECONDS.
