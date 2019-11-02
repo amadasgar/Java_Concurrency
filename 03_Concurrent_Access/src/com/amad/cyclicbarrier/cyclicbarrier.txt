@@ -25,6 +25,15 @@ point. Each time a thread arrives at the synchronization point, it calls the awa
 thread has arrived at its synchronization point. 
 CyclicBarrier puts the thread to sleep until all the threads reach the synchronization point.
 
+**************************************************************************************************************************************
+The CyclicBarrier class has another version of the await() method:
+
+await(long time, TimeUnit unit): In this method, the thread will continue to sleep until it's interrupted, that is, either the 
+internal counter of CyclicBarrier arrives at 0 or the specified time passes. The TimeUnit class is an enumeration with the following 
+constants: DAYS, HOURS, MICROSECONDS, MILLISECONDS, MINUTES, NANOSECONDS, and SECONDS.
+
+This class also provides the getNumberWaiting() method that returns the number of threads that are blocked in the await() method and 
+the getParties() method that returns the number of tasks that are going to be synchronized with CyclicBarrier.
 When all the threads have arrived, the CyclicBarrier object wakes up all the threads that were waiting in the await() method. 
 Optionally, it creates a new thread that executes a Runnable object passed as the parameter in the construction of CyclicBarrier 
 (in our case, a Grouper object) to do additional tasks.
