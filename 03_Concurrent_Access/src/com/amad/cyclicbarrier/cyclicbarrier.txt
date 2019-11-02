@@ -37,3 +37,21 @@ the getParties() method that returns the number of tasks that are going to be sy
 When all the threads have arrived, the CyclicBarrier object wakes up all the threads that were waiting in the await() method. 
 Optionally, it creates a new thread that executes a Runnable object passed as the parameter in the construction of CyclicBarrier 
 (in our case, a Grouper object) to do additional tasks.
+*********************************************************************************************************************************
+Resetting a CyclicBarrier object
+The CyclicBarrier class has some points in common with the CountDownLatch class, but they also have some differences. 
+One of the most important differences is that a CyclicBarrier object can be reset to its initial state, assigning to its internal 
+counter the value with which it was initialized.
+
+This reset operation can be done using the reset() method of the CyclicBarrier class. When this occurs, all the threads that were 
+waiting in the await() method receive a BrokenBarrierException exception. This exception was processed in the example presented in 
+this recipe by printing the stack trace; however, in a more complex application, it could perform some other operation, such as 
+restarting the execution or recovering the operation at the point it was interrupted.
+**********************************************************************************************************************************
+Broken CyclicBarrier objects
+A CyclicBarrier object can be in a special state denoted by the broken state. When there are various threads waiting in the await() 
+method and one of them is interrupted, the one that is interrupted receives an InterruptedException exception, but other threads 
+receive a BrokenBarrierException exception; CyclicBarrier is placed in the broken state.
+
+The CyclicBarrier class provides the isBroken() method. It returns true if the object is in the broken state; otherwise, it returns 
+false.
