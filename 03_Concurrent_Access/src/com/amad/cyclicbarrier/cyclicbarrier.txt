@@ -1,0 +1,30 @@
+The Java concurrency API provides a synchronizing utility that allows the synchronization of two or more threads at a determined point.
+It's the CyclicBarrier class. This class is similar to the CountDownLatch class explained in the Waiting for multiple concurrent events
+ recipe in this chapter, but it presents some differences that make it a more powerful class.
+
+The CyclicBarrier class is initialized with an integer number, which is the number of threads that will be synchronized at a determined
+ point. When one of these threads arrives at the determined point, it calls the await() method to wait for the other threads. 
+ When the thread calls this method, the CyclicBarrier class blocks the thread that is sleeping until the other threads arrive. 
+ When the last thread calls the await() method of the CyclicBarrier object, it wakes up all the threads that were waiting and 
+ continues with its job.
+
+One interesting advantage of the CyclicBarrier class is that you can pass an additional Runnable object as an initialization parameter,
+ and the CyclicBarrier class executes this object as a thread when all the threads arrive at the common point. 
+ This characteristic makes this class adequate for parallelization of tasks using the divide and conquer programming technique.
+ 
+ ************************************************************************************************************************************
+ The problem resolved in the example is simple. We have a big matrix of random integers, and you want to know the total number of 
+ occurrences of a number in this matrix. To get better performance, we used the divide and conquer technique. We divided the matrix 
+ into five subsets and used a thread to look for the number in each subset. These threads are objects of the Searcher class.
+
+We used a CyclicBarrier object to synchronize the completion of the five threads and execute the Grouper task to process partial 
+results and calculate the final one.
+
+As mentioned earlier, the CyclicBarrier class has an internal counter to control how many threads need to arrive at the synchronization
+point. Each time a thread arrives at the synchronization point, it calls the await() method to notify the CyclicBarrier object that a 
+thread has arrived at its synchronization point. 
+CyclicBarrier puts the thread to sleep until all the threads reach the synchronization point.
+
+When all the threads have arrived, the CyclicBarrier object wakes up all the threads that were waiting in the await() method. 
+Optionally, it creates a new thread that executes a Runnable object passed as the parameter in the construction of CyclicBarrier 
+(in our case, a Grouper object) to do additional tasks.
