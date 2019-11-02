@@ -1,0 +1,21 @@
+The CountDownLatch class has three basic elements:
+
+1.	The initialization value that determines how many events the CountDownLatch object waits for.
+2.	The await() method, called by the threads that wait for the finalization of all the events.
+3.	The countDown() method, called by the events when they finish their execution.
+
+When you create a CountDownLatch object, it uses the constructor's parameter to initialize an internal counter. 
+Every time a thread calls the countDown() method, the CountDownLatch object decrements the internal counter in one unit. 
+When the internal counter reaches 0, the CountDownLatch object wakes up all the threads that were waiting in the await() method.
+
+There's no way to re-initialize the internal counter of the CountDownLatch object or modify its value. 
+Once the counter is initialized, the only method you can use to modify its value is the countDown() method explained earlier. 
+When the counter reaches 0, all the calls to the await() method are returned immediately and all subsequent calls to the countDown() 
+method have no effect.
+
+However, there are some differences with respect to other synchronization methods, which are as follows:
+
+1.	The CountDownLatch mechanism is not used to protect a shared resource or a critical section. 
+	It is used to synchronize one or more threads with the execution of various tasks.
+2.	It only admits one use. As explained earlier, once the counter of CountDownLatch arrives at 0, all the calls to its methods have 
+	no effect. You have to create a new object if you want to do the same synchronization again.
